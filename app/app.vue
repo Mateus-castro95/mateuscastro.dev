@@ -35,4 +35,15 @@ html, body {
   height: 100vh;
   overflow: hidden;
 }
+
+/* Tenta remover a marca d'água do Spline globalmente */
+#spline-logo, 
+a[href*="spline.design"], 
+[class*="spline-watermark"],
+[id*="spline-watermark"] {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
 </style>

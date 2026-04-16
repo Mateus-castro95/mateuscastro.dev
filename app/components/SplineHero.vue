@@ -16,12 +16,31 @@ const siteText = {
 
 onMounted(async () => {
     if (canvasRef.value) {
-        splineApp.value = new Application(canvasRef.value);
-        
         try {
+            // Inicialização padrão segura
+            splineApp.value = new Application(canvasRef.value);
+            
+            // Carrega a cena primeiro
             await splineApp.value.load('https://prod.spline.design/jUkquMk7CSGnJQOf/scene.splinecode');
-            console.log('✅ Spline Hero: Cena carregada com sucesso!');
+            console.log('✅ Spline Hero: Carregado!');
+            
             isLoading.value = false;
+
+            // Otimizações aplicadas APÓS o carregamento para evitar crashes
+            const isMobile = window.innerWidth < 768;
+            if (isMobile) {
+                // Se o método existir na sua versão da runtime, ele aplica, senão ignora
+                if ((splineApp.value as any).setPixelRatio) {
+                    (splineApp.value as any).setPixelRatio(1);
+                }
+            }
+            console.log('✅ Spline Hero: Cena carregada!');
+            isLoading.value = false;
+
+            // Tenta forçar a remoção via API interna se existir
+            if ((splineApp.value as any).setLogoVisible) {
+                (splineApp.value as any).setLogoVisible(false);
+            }
 
             const allObjects = splineApp.value.getAllObjects();
             
@@ -44,6 +63,25 @@ onMounted(async () => {
             canvasRef.value.addEventListener('mousedown', preventAction, { capture: true });
             canvasRef.value.addEventListener('touchstart', preventAction, { capture: true });
 
+            // 🎯 CAÇADOR DE MARCA D'ÁGUA (Agressivo)
+            // Remove o logo do Spline mesmo que ele tente reaparecer ou esteja em Shadow DOM
+            const hideSplineLogo = () => {
+                const query = 'a[href*="spline.design"], .spline-watermark, #spline-logo';
+                // 1. Procura no DOM principal
+                document.querySelectorAll(query).forEach(el => (el as HTMLElement).style.display = 'none');
+                
+                // 2. Procura em possíveis Shadow DOMs (comum em Web Components)
+                const allElements = document.querySelectorAll('*');
+                allElements.forEach(el => {
+                    if (el.shadowRoot) {
+                        el.shadowRoot.querySelectorAll(query).forEach(sEl => (sEl as HTMLElement).style.display = 'none');
+                    }
+                });
+            };
+
+            const interval = setInterval(hideSplineLogo, 100);
+            (window as any)._splineCleaner = interval;
+
         } catch (error) {
             console.error('❌ Erro ao carregar cena Spline:', error);
         }
@@ -51,9 +89,11 @@ onMounted(async () => {
 });
 
 onBeforeUnmount(() => {
+    if ((window as any)._splineCleaner) {
+        clearInterval((window as any)._splineCleaner);
+    }
     if (splineApp.value) {
         // Limpar recursos ao desmontar
-        // splineApp.value.dispose(); // Algumas versões da runtime podem não ter dispose direto
     }
 });
 </script>
@@ -91,5 +131,12 @@ onBeforeUnmount(() => {
 canvas {
     outline: none;
     -webkit-tap-highlight-color: transparent;
+    /* O TRUQUE: Faz o canvas ser levemente maior para empurrar o logo para fora */
+    width: calc(100% + 100px) !important;
+    height: calc(100% + 100px) !important;
+    position: absolute;
+    bottom: -50px !important;
+    right: -50px !important;
 }
+
 </style>
