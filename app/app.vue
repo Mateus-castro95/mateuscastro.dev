@@ -15,7 +15,8 @@ onMounted(() => {
 
 <template>
   <div class="bg-black min-h-screen text-white">
-    <!-- Navegação e GlobalLayout podem vir aqui depois -->
+    <!-- Navegação Lateral -->
+    <SideMenu />
     
     <main>
       <!-- Hero Section -->
@@ -29,13 +30,13 @@ onMounted(() => {
 </template>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Changa+One&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 html, body {
   margin: 0;
   padding: 0;
   background-color: black;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Changa One', sans-serif;
   overflow-x: hidden;
 }
 

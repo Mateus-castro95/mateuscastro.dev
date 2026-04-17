@@ -8,10 +8,10 @@
   --color-background: #030708;
   --color-surface: #0a0e0f;
   --color-muted: #9CA3AF;
-  
+
   background-color: var(--color-background);
   color: white;
-  font-family: 'Iceland', sans-serif;
+  font-family: 'Changa One', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--color-background);
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
@@ -28,7 +28,8 @@ body {
   min-height: 100vh;
 }
 
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
