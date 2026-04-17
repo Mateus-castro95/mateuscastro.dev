@@ -18,9 +18,9 @@
           <span class="inline-block whitespace-nowrap">Web Designer</span>
         </p>
         <div class="mt-16 md:mt-24 border-l-2 border-[#A3FF12] pl-6 max-w-lg animate-fade-in" style="animation-delay: 0.3s">
-          <p class="text-slate-400 text-sm md:text-base lg:text-lg leading-relaxed font-sans tracking-tight">
+          <p class="text-slate-400 text-sm md:text-base lg:text-lg leading-[2.2] font-sans tracking-tight">
             Desenvolvo sistemas sob medida para empresas <br />
-            <span class="text-[#A3FF12] font-bold uppercase tracking-wider">Sites 3D, animações e interações imersivas</span>.
+            <span class="text-[#A3FF12] font-bold uppercase tracking-wider mt-4 inline-block">Sites 3D, animações e interações imersivas</span>
           </p>
         </div>
       </div>
