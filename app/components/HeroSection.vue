@@ -1,5 +1,5 @@
 <template>
-  <section id="hero" class="relative w-full h-screen overflow-hidden bg-black selection:bg-indigo-500/30">
+  <section id="hero" class="sticky top-0 z-0 w-full h-screen overflow-hidden bg-black selection:bg-indigo-500/30">
     <!-- Fundo 3D Spline (Exclusivo desta seção) -->
     <div class="absolute inset-0 z-0">
       <ClientOnly>
