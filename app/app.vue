@@ -14,26 +14,33 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative w-screen h-screen overflow-hidden bg-black">
-    <!-- Exatamente apenas o fundo 3D Spline, e absolutamente mais nada -->
-    <div class="absolute inset-0 z-0">
-      <ClientOnly>
-        <SplineHero />
-      </ClientOnly>
-    </div>
+  <div class="bg-black min-h-screen text-white">
+    <!-- Navegação e GlobalLayout podem vir aqui depois -->
+    
+    <main>
+      <!-- Hero Section -->
+      <HeroSection />
+      
+      <!-- Outras seções virão aqui: About, Skills, Projects, etc. -->
+    </main>
+
+    <!-- Footer pode vir aqui depois -->
   </div>
 </template>
 
 <style>
-/* Reset absoluto */
-*, *::before, *::after { box-sizing: border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap');
 
 html, body {
   margin: 0;
   padding: 0;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  background-color: black;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
 /* Tenta remover a marca d'água do Spline globalmente */
@@ -45,5 +52,9 @@ a[href*="spline.design"],
     opacity: 0 !important;
     visibility: hidden !important;
     pointer-events: none !important;
+}
+
+.selection\:bg-indigo-500\/30 ::selection {
+  background-color: rgba(99, 102, 241, 0.3);
 }
 </style>
