@@ -4,6 +4,7 @@ import { Application } from '@splinetool/runtime';
 import { useWindowSize } from '@vueuse/core';
 
 const canvasRef = ref<HTMLCanvasElement | null>(null);
+const videoRef = ref<HTMLVideoElement | null>(null);
 const splineApp = shallowRef<Application | null>(null);
 const isLoading = ref(true);
 
@@ -17,6 +18,14 @@ onMounted(async () => {
     // Se for mobile, ignoramos o carregamento pesado do Spline!
     if (isMobileDevice.value) {
         isLoading.value = false;
+        
+        // Safari iOS Hack: Força o play programaticamente
+        setTimeout(() => {
+            if (videoRef.value) {
+                videoRef.value.play().catch(err => console.log('Safari Autoplay Prevented:', err));
+            }
+        }, 100);
+        
         return; // Sai da função precocemente
     }
 
@@ -85,11 +94,14 @@ onBeforeUnmount(() => {
         <!-- FALLBACK VIDEO PARA MOBILE (Super Leve) -->
         <video 
             v-if="isMobileDevice"
+            ref="videoRef"
             src="/fundo-mobile.mp4" 
             autoplay 
             loop 
             muted 
             playsinline 
+            webkit-playsinline
+            preload="auto"
             class="absolute inset-0 w-full h-full object-cover z-0"
         ></video>
 
