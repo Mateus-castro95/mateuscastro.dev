@@ -26,7 +26,6 @@ onMounted(() => {
       <ServicesSection />
       
       <!-- Outras seções virão aqui: About, Skills, Projects, etc. -->
-      <div style="height: 100vh;"></div> <!-- Apenas para permitir scroll por enquanto -->
     </main>
 
     <!-- Footer pode vir aqui depois -->

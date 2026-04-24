@@ -3,10 +3,12 @@ import { onMounted, onBeforeUnmount, ref, shallowRef } from 'vue';
 import { Application } from '@splinetool/runtime';
 import { useWindowSize } from '@vueuse/core';
 
+const wrapperRef = ref<HTMLDivElement | null>(null);
 const canvasRef = ref<HTMLCanvasElement | null>(null);
 const videoRef = ref<HTMLVideoElement | null>(null);
 const splineApp = shallowRef<Application | null>(null);
 const isLoading = ref(true);
+let observer: IntersectionObserver | null = null;
 
 const { width } = useWindowSize();
 // Consideramos telas menores que 768px como Mobile
@@ -25,12 +27,8 @@ onMounted(async () => {
                 videoRef.value.play().catch(err => console.log('Safari Autoplay Prevented:', err));
             }
         }, 100);
-        
-        return; // Sai da função precocemente
-    }
-
-    // Carregamento do Spline interativo apenas no Computador
-    if (canvasRef.value) {
+    } else if (canvasRef.value) {
+        // Carregamento do Spline interativo apenas no Computador
         try {
             splineApp.value = new Application(canvasRef.value);
             
@@ -67,9 +65,39 @@ onMounted(async () => {
             isLoading.value = false;
         }
     }
+
+    // 🚀 OTIMIZAÇÃO DE PERFORMANCE: Pausar quando fora da tela
+    setTimeout(() => {
+        observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    // Visível: Reproduzir
+                    if (isMobileDevice.value && videoRef.value) {
+                        videoRef.value.play().catch(() => {});
+                    } else if (splineApp.value && typeof (splineApp.value as any).play === 'function') {
+                        (splineApp.value as any).play();
+                    }
+                } else {
+                    // Invisível: Pausar para liberar GPU
+                    if (isMobileDevice.value && videoRef.value) {
+                        videoRef.value.pause();
+                    } else if (splineApp.value && typeof (splineApp.value as any).stop === 'function') {
+                        (splineApp.value as any).stop();
+                    }
+                }
+            });
+        }, { rootMargin: '100px', threshold: 0 });
+
+        if (wrapperRef.value) {
+            observer.observe(wrapperRef.value);
+        }
+    }, 500); // Aguarda a montagem inicial
 });
 
 onBeforeUnmount(() => {
+    if (observer) {
+        observer.disconnect();
+    }
     if ((window as any)._splineCleaner) {
         clearInterval((window as any)._splineCleaner);
     }
@@ -82,7 +110,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="spline-wrapper w-full h-full relative overflow-hidden bg-black">
+    <div ref="wrapperRef" class="spline-wrapper w-full h-full relative overflow-hidden bg-black">
         <!-- Overlay de carregamento elegante -->
         <Transition name="fade">
             <div v-if="isLoading" class="absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#030708]">

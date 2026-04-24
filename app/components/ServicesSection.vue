@@ -1,59 +1,83 @@
 <template>
-  <section id="services" class="relative z-10 w-full py-24 md:py-32 px-6 md:px-20 bg-[#090D15] flex flex-col justify-center min-h-screen shadow-[0_-20px_50px_rgba(0,0,0,0.8)] perspective-[1000px]">
-    <!-- Gradiente subtil no fundo para dar profundidade -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent pointer-events-none"></div>
+  <section id="services" class="services-section relative z-10 w-full pt-16 md:pt-32 pb-16 md:pb-0 px-4 sm:px-6 md:px-20 flex flex-col justify-start overflow-hidden shadow-[0_-30px_60px_rgba(0,0,0,0.8)]">
+    
+    <!-- Background Color with Fade-in (Narrower) -->
+    <div class="absolute inset-0 bg-[#1E2229] pointer-events-none" style="mask-image: linear-gradient(to bottom, transparent, black 80px); -webkit-mask-image: linear-gradient(to bottom, transparent, black 80px);"></div>
 
-    <div class="max-w-7xl mx-auto w-full relative z-10 pl-0 md:pr-[100px]">
+    <!-- Blur Transition Layer (Narrower) -->
+    <div class="absolute top-0 left-0 w-full h-24 backdrop-blur-xl pointer-events-none z-20" style="mask-image: linear-gradient(to bottom, black, transparent); -webkit-mask-image: linear-gradient(to bottom, black, transparent);"></div>
+    
+    <!-- Gradiente de transição no topo adicional (Narrower) -->
+    <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/50 to-transparent pointer-events-none z-10"></div>
+    
+    <!-- Grain/Noise Overlay -->
+
+    <!-- Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <!-- Subtle Grid Pattern -->
+      <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-50"></div>
+      <div class="absolute inset-0" style="background-image: radial-gradient(rgba(163, 255, 18, 0.03) 1px, transparent 1px); background-size: 40px 40px;"></div>
       
-      <!-- Cabeçalho -->
-      <div class="mb-16 md:mb-20">
-        <!-- Wrappers overflow-hidden para o efeito máscara (Mask Reveal) -->
-        <h2 class="font-bold text-white tracking-wide uppercase leading-none font-display mb-6">
-          <div class="overflow-hidden">
-            <span class="block text-[clamp(2.5rem,6vw,5.5rem)] gs-reveal">Como posso</span>
+      <!-- Dynamic Glow Meshes -->
+      <div class="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-[#A3FF12]/10 blur-[120px] rounded-full animate-pulse"></div>
+      <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto w-full relative z-10">
+      
+      <!-- Cabeçalho Editorial -->
+      <div class="mb-10 sm:mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div class="max-w-3xl">
+          <div class="flex items-center gap-4 mb-8 gs-reveal-sub">
+            <div class="w-12 h-[1px] bg-[#A3FF12]"></div>
+            <span class="text-[#A3FF12] font-mono text-sm tracking-[0.3em] uppercase">ALTA PERFORMANCE</span>
           </div>
-          <div class="overflow-hidden mt-1">
-            <span class="block text-[clamp(2.5rem,6vw,5.5rem)] text-slate-500 gs-reveal">te ajudar</span>
-          </div>
-        </h2>
-        
-        <div class="border-l-2 border-[#A3FF12]/30 pl-6 mt-8 overflow-hidden">
-          <p class="text-slate-400 text-lg md:text-xl lg:text-2xl font-sans max-w-2xl leading-relaxed tracking-tight gs-reveal-sub">
-            Soluções digitais pensadas para performance, escala e experiência do usuário.
-          </p>
+          
+          <h2 class="text-white tracking-tighter leading-[0.9] font-display uppercase">
+            <div class="overflow-hidden">
+              <span class="block text-[clamp(1.5rem,11vw,8rem)] whitespace-nowrap gs-reveal">Como posso</span>
+            </div>
+            <div class="overflow-hidden">
+              <span class="block text-[clamp(1.5rem,11vw,8rem)] whitespace-nowrap text-transparent stroke-text gs-reveal italic">te ajudar</span>
+            </div>
+          </h2>
         </div>
+
+
       </div>
       
-      <!-- Efeito de luz difusa no fundo para o vidro fosco distorcer (Glow) -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-[60%] bg-gradient-to-r from-[#A3FF12]/5 via-blue-500/5 to-[#A3FF12]/5 blur-[100px] rounded-full pointer-events-none z-0"></div>
-
-      <!-- Grid de Cards de Serviço -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 relative z-10">
+      <!-- Grid de Cards de Serviço (Asymmetric Feel) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 cards-grid">
         
         <div 
           v-for="(service, index) in services" 
           :key="index"
-          class="service-card group relative bg-white/5 border border-white/10 rounded-3xl p-8 md:p-10 flex flex-col overflow-hidden backdrop-blur-xl"
-          @mousemove="(e) => handleMouseMove(e, index)"
-          @mouseleave="() => handleMouseLeave(index)"
-          :style="cardStyles[index]"
+          :class="[
+            'service-card relative bg-[#12151A] border border-white/5 rounded-[32px] p-6 sm:p-8 md:p-10 flex flex-col h-[480px] sm:h-[560px] md:h-[650px] overflow-hidden shadow-2xl',
+            index === 1 ? 'z-20' : 'z-10'
+          ]"
+          :style="isMobile ? {} : cardStyles[index]"
         >
-          <!-- Reflexo de luz do hover no background do vidro -->
-          <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+          <!-- Internal Glass Effect -->
+          <div class="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none"></div>
 
-          <!-- Ícone Flutuante (Glassmorphism opaco) -->
-          <div class="floating-icon relative w-16 h-16 rounded-2xl flex items-center justify-center mb-8 bg-white/5 border border-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] backdrop-blur-2xl z-10">
-            <component :is="service.icon" class="w-8 h-8 text-[#A3FF12]" />
-            <!-- Brilho interno do vidro do ícone -->
-            <div class="absolute inset-0 rounded-2xl bg-gradient-to-tr from-white/5 via-transparent to-white/10 pointer-events-none"></div>
+          <!-- Textos no Topo -->
+          <div class="z-10">
+            <h3 class="text-white text-2xl md:text-3xl font-bold font-sans mb-8 tracking-tight leading-tight uppercase whitespace-pre-line">
+              {{ service.title }}
+            </h3>
+            <p class="text-slate-400 font-sans leading-relaxed text-xs md:text-sm">
+              {{ service.description }}
+            </p>
           </div>
 
-          <!-- Textos -->
-          <h3 class="text-white text-xl md:text-2xl font-bold font-sans mb-4 tracking-wide z-10">{{ service.title }}</h3>
-          <p class="text-slate-300 font-sans leading-relaxed text-sm md:text-base flex-grow z-10">{{ service.description }}</p>
-          
-          <!-- Linha neon fina embaixo ao fazer hover -->
-          <div class="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#A3FF12]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+          <!-- Impact Box (Destaque Neon) -->
+          <div class="mt-12 z-10 bg-[#A3FF12]/5 rounded-xl p-5 border border-[#A3FF12]/40 shadow-[0_0_20px_rgba(163,255,18,0.15)] backdrop-blur-sm">
+             <span class="block text-xs font-mono text-[#A3FF12] mb-1 tracking-wider uppercase opacity-90">Impacto Direto:</span>
+             <span class="block text-[#A3FF12] text-sm md:text-base font-sans font-medium">{{ service.impact }}</span>
+          </div>
+
+
         </div>
 
       </div>
@@ -63,141 +87,265 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Box, Code2, MonitorSmartphone } from 'lucide-vue-next'
+
+
+const isMobile = ref(false)
 
 // Dados dos Serviços
 const services = [
   {
-    title: 'Experiências 3D interativas',
-    description: 'Interfaces com animações e elementos 3D que tornam seu produto mais envolvente e memorável.',
-    icon: Box
+    title: 'Experiências 3D Interativas',
+    description: 'Sites com elementos 3D e animações que prendem a atenção, aumentam o tempo de permanência e tornam sua marca memorável.',
+    impact: 'Mais engajamento, mais interesse e maior conversão de visitantes em clientes.'
   },
   {
-    title: 'Sistemas sob medida',
-    description: 'Desenvolvimento de sistemas personalizados para automatizar processos, melhorar a gestão e escalar operações.',
-    icon: Code2
+    title: 'Sistemas De Alta-Performance',
+    description: 'Sistemas rápidos, seguros e escaláveis que automatizam processos e eliminam gargalos no seu negócio.',
+    impact: 'Mais eficiência, redução de custos e aumento da capacidade de crescimento.'
   },
   {
-    title: 'Aplicações web modernas',
-    description: 'Criação de aplicações rápidas, responsivas e escaláveis, com foco em usabilidade e performance.',
-    icon: MonitorSmartphone
+    title: 'Design Criativo\n& Web',
+    description: 'Sites modernos e estratégicos, pensados para guiar o usuário e transformar visitas em oportunidades reais.',
+    impact: 'Mais leads, mais clientes e aumento direto nas vendas.'
   }
 ]
 
+// Função para obter o transform inicial baseado na posição do card
+const getInitialTransform = (index: number) => {
+  // Rotação fixa para a esquerda em todos os cards (simulando a referência)
+  const tilt = 'rotateZ(-5deg)'
+  
+  // Cards posicionados para que o ícone gigante na base seja parcialmente exibido antes do corte da section (h-1050px)
+  if (index === 0) return `perspective(1200px) translate3d(0, 100px, 0) ${tilt} scale3d(0.9, 0.9, 0.9)`
+  if (index === 1) return `perspective(1200px) translate3d(0, 0px, 0) ${tilt} scale3d(1.1, 1.1, 1.1)`
+  if (index === 2) return `perspective(1200px) translate3d(0, 100px, 0) ${tilt} scale3d(0.9, 0.9, 0.9)`
+  
+  return `perspective(1200px) ${tilt} scale3d(1, 1, 1)`
+}
+
 // Estado para armazenar a rotação 3D individual de cada card
-const cardStyles = reactive(services.map(() => ({
-  transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)'
+const cardStyles = reactive(services.map((_, index) => ({
+  transform: getInitialTransform(index)
 })))
 
-// Efeito 3D Tilt interativo com o mouse
-const handleMouseMove = (e: MouseEvent, index: number) => {
-  const card = e.currentTarget as HTMLElement
-  const rect = card.getBoundingClientRect()
-  
-  // Calcula posição relativa (-0.5 a 0.5)
-  const x = (e.clientX - rect.left) / rect.width - 0.5
-  const y = (e.clientY - rect.top) / rect.height - 0.5
-  
-  // Multiplicador de inclinação (quanto maior, mais inclina)
-  const tiltX = -y * 12
-  const tiltY = x * 12
-
-  // Aplica o rotate 3D no CSS do card
-  cardStyles[index].transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`
-}
-
-// Reseta o card para a posição original quando o mouse sai
-const handleMouseLeave = (index: number) => {
-  cardStyles[index].transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`
-}
-
 onMounted(() => {
-  // Configuração inicial das animações de entrada
-  gsap.set('.gs-reveal', { yPercent: 100, opacity: 0 })
-  gsap.set('.gs-reveal-sub', { x: -30, opacity: 0 })
-  gsap.set('.service-card', { y: 60, opacity: 0, scale: 0.95 })
+  // Detecta mobile e atualiza ao redimensionar
+  const checkMobile = () => { isMobile.value = window.innerWidth < 1289 }
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
 
-  // Trigger principal de entrada da seção
+  gsap.registerPlugin(ScrollTrigger)
+
+  const isDesktop = window.innerWidth >= 1289
+
+  // Helper para definir o estado inicial (invisível)
+  const resetElements = () => {
+    gsap.set('.gs-reveal', { yPercent: 100, opacity: 0 })
+    gsap.set('.gs-reveal-sub', { y: 20, opacity: 0 })
+    gsap.set('.service-card', { y: 80, opacity: 0 })
+  }
+
+  resetElements()
+
+  // Trigger para títulos e badge (compartilhado)
   ScrollTrigger.create({
     trigger: '#services',
-    start: 'top 70%',
+    start: 'top 75%',
+    end: 'top 10%',
     onEnter: () => {
-      // 1. Títulos
       gsap.to('.gs-reveal', {
         yPercent: 0,
         opacity: 1,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: 'power4.out'
+        duration: 1.5,
+        stagger: 0.1,
+        ease: 'expo.out'
       })
-      
-      // 2. Subtítulo
       gsap.to('.gs-reveal-sub', {
-        x: 0,
+        y: 0,
         opacity: 1,
         duration: 1.2,
-        delay: 0.3,
+        delay: 0.4,
+        stagger: 0.2,
         ease: 'power3.out'
       })
 
-      // 3. Entrada dos Cards em cascata (Stagger effect)
-      gsap.to('.service-card', {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        stagger: 0.2, // Um card aparece a cada 0.2 segundos
-        delay: 0.4,
-        ease: 'back.out(1.2)' // Um leve "pop" no final
-      })
+      // Desktop: todos os cards animam juntos com o trigger da seção
+      if (isDesktop) {
+        gsap.to('.service-card', {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          stagger: 0.15,
+          delay: 0.6,
+          ease: 'power4.out'
+        })
+      }
     },
-    once: true
-  })
-
-  // Animação de flutuação e rotação falsa 3D contínua para os ícones
-  gsap.to('.floating-icon', {
-    y: -12, // Sobe 12px
-    rotateY: 15, // Gira 15 graus no eixo Y (simula uma moeda)
-    rotationZ: 3, // Inclina levemente
-    duration: 3.5, // Duração de uma ida
-    repeat: -1, // Repetição infinita
-    yoyo: true, // Efeito Vai e Volta
-    ease: 'sine.inOut', // Suavidade nas pontas
-    stagger: {
-      each: 0.5, // Ícones sobem em momentos diferentes
-      from: "random"
+    onLeaveBack: () => {
+      resetElements()
     }
   })
+
+  // Mobile/Tablet: cada card tem seu próprio scroll trigger individual
+  if (!isDesktop) {
+    const cards = document.querySelectorAll('.service-card')
+    cards.forEach((card, i) => {
+      ScrollTrigger.create({
+        trigger: card,
+        start: 'top 85%',
+        end: 'top 40%',
+        once: false,
+        onEnter: () => {
+          // Slide-up + fade com delay stagger baseado no index
+          gsap.to(card, {
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            delay: i * 0.08,
+            ease: 'power3.out'
+          })
+
+          // Glow pulse na borda — aparece e desaparece
+          gsap.fromTo(card, 
+            { boxShadow: '0 0 0px rgba(163, 255, 18, 0)' },
+            { 
+              boxShadow: '0 0 25px rgba(163, 255, 18, 0.25), inset 0 0 25px rgba(163, 255, 18, 0.05)',
+              duration: 0.6,
+              delay: i * 0.08 + 0.3,
+              ease: 'power2.out',
+              yoyo: true,
+              repeat: 1
+            }
+          )
+        },
+        onLeaveBack: () => {
+          gsap.to(card, {
+            y: 80,
+            opacity: 0,
+            duration: 0.4,
+            ease: 'power2.in'
+          })
+        }
+      })
+    })
+  }
 })
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Outfit:wght@300;400;600&display=swap');
+
 .font-display {
   font-family: 'Changa One', sans-serif;
 }
 
 .font-sans {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Outfit', sans-serif;
+}
+
+.stroke-text {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+  text-shadow: none;
+}
+
+.noise-bg {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Desktop (≥1289px): altura fixa + overflow hidden para o efeito de corte dos cards */
+@media (min-width: 1289px) {
+  .services-section {
+    height: 1050px;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+}
+
+/* Tablet/Medium (768px–1288px): cards horizontais, 1 por linha */
+@media (min-width: 768px) and (max-width: 1288px) {
+  .cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .service-card {
+    height: auto !important;
+    min-height: 180px;
+    flex-direction: row !important;
+    align-items: center;
+    gap: clamp(16px, 3vw, 32px);
+    transform: none !important;
+    padding: clamp(20px, 3vw, 28px) clamp(20px, 3vw, 36px) !important;
+  }
+
+  .service-card .z-10:first-of-type {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .service-card .z-10:first-of-type h3 {
+    font-size: clamp(0.85rem, 1.5vw, 1.15rem);
+    margin-bottom: 6px !important;
+    white-space: normal !important;
+    line-height: 1.25;
+  }
+
+  .service-card .z-10:first-of-type p {
+    font-size: clamp(0.65rem, 1.1vw, 0.8rem);
+    line-height: 1.5;
+  }
+
+  .service-card .mt-12 {
+    margin-top: 0 !important;
+    flex-shrink: 0;
+    width: clamp(180px, 22vw, 260px);
+  }
+
+  .service-card .mt-12 span:first-child {
+    font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+  }
+
+  .service-card .mt-12 span:last-child {
+    font-size: clamp(0.7rem, 1.1vw, 0.875rem);
+  }
 }
 
 .service-card {
   transform-style: preserve-3d;
-  /* Transição rápida para acompanhar o mouse, mas suave o suficiente para não piscar */
-  transition: transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease, border-color 0.3s ease;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.4s ease, background-color 0.4s ease;
 }
 
-.service-card:hover {
-  border-color: rgba(163, 255, 18, 0.1);
-  box-shadow: 0 20px 40px -5px rgba(0,0,0,0.6), 0 0 30px rgba(163,255,18,0.03);
+/* Abaixo de 1289px, remove transforms 3D */
+@media (max-width: 1288px) {
+  .service-card {
+    transform: none !important;
+  }
 }
 
-.service-card:hover .floating-icon {
-  /* No hover do card, o ícone "acende" mais forte */
-  border-color: rgba(163, 255, 18, 0.4);
-  box-shadow: 0 0 35px rgba(163, 255, 18, 0.2);
-  transform: scale(1.05);
+/* Mobile (≤767px): card height auto para remover espaço vazio */
+@media (max-width: 767px) {
+  .service-card {
+    height: auto !important;
+    padding: 24px !important;
+  }
+
+  .service-card .mt-12 {
+    margin-top: 24px !important;
+  }
+}
+
+
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.1); }
+}
+
+.animate-pulse {
+  animation: pulse 8s infinite ease-in-out;
 }
 </style>
+
