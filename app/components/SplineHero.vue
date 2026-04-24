@@ -129,8 +129,11 @@ onBeforeUnmount(() => {
             muted 
             playsinline 
             webkit-playsinline
+            disablePictureInPicture
+            disableRemotePlayback
             preload="auto"
-            class="absolute inset-0 w-full h-full object-cover z-0"
+            class="absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+            style="pointer-events: none;"
         ></video>
 
         <!-- SPLINE 3D PARA DESKTOP -->
@@ -163,5 +166,13 @@ canvas {
     position: absolute;
     bottom: -50px !important;
     right: -50px !important;
+}
+
+/* Oculta completamente qualquer botão de play nativo (iOS/Safari) */
+video::-webkit-media-controls,
+video::-webkit-media-controls-start-playback-button,
+video::-webkit-media-controls-play-button {
+    display: none !important;
+    -webkit-appearance: none !important;
 }
 </style>
