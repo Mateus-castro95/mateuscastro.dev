@@ -195,17 +195,17 @@ onMounted(() => {
     cards.forEach((card, i) => {
       ScrollTrigger.create({
         trigger: card,
-        start: 'top 85%',
+        start: 'top 88%',
         end: 'top 40%',
         once: false,
         onEnter: () => {
-          // Slide-up + fade com delay stagger baseado no index
+          // Slide-up + fade mais suave e demorado
           gsap.to(card, {
             y: 0,
             opacity: 1,
-            duration: 0.8,
-            delay: i * 0.08,
-            ease: 'power3.out'
+            duration: 1.3,
+            delay: i * 0.20,
+            ease: 'expo.out'
           })
 
           // Glow pulse na borda — aparece e desaparece
@@ -213,8 +213,8 @@ onMounted(() => {
             { boxShadow: '0 0 0px rgba(163, 255, 18, 0)' },
             { 
               boxShadow: '0 0 25px rgba(163, 255, 18, 0.25), inset 0 0 25px rgba(163, 255, 18, 0.05)',
-              duration: 0.6,
-              delay: i * 0.08 + 0.3,
+              duration: 0.8,
+              delay: i * 0.18 + 0.5,
               ease: 'power2.out',
               yoyo: true,
               repeat: 1
@@ -225,7 +225,7 @@ onMounted(() => {
           gsap.to(card, {
             y: 80,
             opacity: 0,
-            duration: 0.4,
+            duration: 0.5,
             ease: 'power2.in'
           })
         }
@@ -266,6 +266,10 @@ onMounted(() => {
 
 /* Tablet/Medium (768px–1288px): cards horizontais, 1 por linha */
 @media (min-width: 768px) and (max-width: 1288px) {
+  .services-section {
+    padding-bottom: 80px;
+  }
+
   .cards-grid {
     grid-template-columns: 1fr !important;
     gap: 20px;

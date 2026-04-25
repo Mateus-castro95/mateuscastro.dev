@@ -63,12 +63,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, inject } from 'vue'
 import { Rocket, Blocks, GalleryHorizontalEnd, Award, Workflow, Send } from 'lucide-vue-next'
 import { useWindowSize } from '@vueuse/core'
 
 const activeIndex = ref(0)
 const { width } = useWindowSize()
+const lenis = inject<any>('lenis')
 
 // Condição para ativar o modo cobrinha (Apenas mobile e apenas se não estiver no inicio)
 const isSnakeMode = computed(() => {
@@ -96,11 +97,14 @@ const mobileProgressHeight = computed(() => {
   return `${(snakeProgress.value / 100) * totalHeight}px`
 })
 
-// Função de rolagem suave (funciona bem com o Lenis que já está no app.vue)
+// Função de rolagem suave via Lenis (integrada com GSAP ScrollTrigger)
 const scrollTo = (id: string) => {
   if (!id) return
   const element = document.getElementById(id)
-  if (element) {
+  if (!element) return
+  if (lenis) {
+    lenis.scrollTo(element, { offset: 0, duration: 1.4, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+  } else {
     element.scrollIntoView({ behavior: 'smooth' })
   }
 }
@@ -124,13 +128,15 @@ onMounted(() => {
     rootMargin: "-20% 0px -20% 0px" // Ajuste para o meio da tela ser o foco
   })
 
-  // Registra as seções existentes no DOM
-  menuItems.forEach(item => {
-    if (item.id) {
-      const el = document.getElementById(item.id)
-      if (el) observer?.observe(el)
-    }
-  })
+  // Registra as seções existentes no DOM (com delay para garantir que todas as seções renderizaram)
+  setTimeout(() => {
+    menuItems.forEach(item => {
+      if (item.id) {
+        const el = document.getElementById(item.id)
+        if (el) observer?.observe(el)
+      }
+    })
+  }, 500)
 })
 
 onUnmounted(() => {

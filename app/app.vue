@@ -25,7 +25,10 @@ onMounted(() => {
       <!-- Seção de Serviços / Como posso ajudar -->
       <ServicesSection />
       
-      <!-- Outras seções virão aqui: About, Skills, Projects, etc. -->
+      <!-- Seção de Projetos -->
+      <ProjectsSection />
+      
+      <!-- Outras seções virão aqui: About, Skills, etc. -->
     </main>
 
     <!-- Footer pode vir aqui depois -->
