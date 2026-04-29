@@ -3,6 +3,12 @@ import Lenis from 'lenis'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+useHead({
+  htmlAttrs: {
+    lang: 'pt-BR'
+  }
+})
+
 gsap.registerPlugin(ScrollTrigger)
 
 onMounted(() => {
@@ -27,6 +33,12 @@ onMounted(() => {
       
       <!-- Seção de Projetos -->
       <ProjectsSection />
+      
+      <!-- Seção de Diferenciais -->
+      <DifferentialsSection />
+      
+      <!-- Seção de Processo -->
+      <ProcessSection />
       
       <!-- Outras seções virão aqui: About, Skills, etc. -->
     </main>

@@ -141,10 +141,10 @@ onUnmounted(() => {
   <section id="projects" ref="sectionRef" class="bg-black text-white overflow-hidden py-20 md:py-32 relative z-10 w-full min-h-screen flex flex-col justify-center border-t border-white/5">
     
     <!-- Header com animação de entrada -->
-    <div ref="headerRef" class="container mx-auto px-6 md:px-12 2xl:px-24 mb-16 md:mb-24">
+    <div ref="headerRef" class="max-w-[1440px] mx-auto w-full px-6 md:pl-16 md:pr-[120px] lg:pl-20 lg:pr-[140px] xl:pl-24 xl:pr-[160px] mb-16 md:mb-24">
       
       <!-- Título: cada letra é um span animável, dentro de um overflow-hidden por linha -->
-      <h2 class="text-5xl md:text-7xl lg:text-8xl font-bold uppercase tracking-wide leading-tight mb-6" aria-label="Projetos Recentes">
+      <h2 class="text-[clamp(2.5rem,6vw,8rem)] font-bold uppercase tracking-wide leading-tight mb-6" aria-label="Projetos Recentes">
         <span 
           v-for="(line, lineIdx) in titleLines" 
           :key="lineIdx" 
@@ -176,7 +176,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Pinned Scrolling Container -->
-    <div class="flex overflow-visible pl-6 md:pl-12 2xl:pl-24 w-full relative">
+    <div class="flex overflow-visible px-6 md:pl-16 lg:pl-20 xl:pl-24 w-full relative">
       <!-- Track -->
       <div ref="trackRef" class="flex gap-8 md:gap-12 flex-nowrap w-max pr-[20vw]">
         

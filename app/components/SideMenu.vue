@@ -114,17 +114,27 @@ let observer: IntersectionObserver | null = null
 
 onMounted(() => {
   observer = new IntersectionObserver((entries) => {
-    // Pegamos a seção que está mais visível na tela
     entries.forEach(entry => {
-      if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
-        const index = menuItems.findIndex(item => item.id === entry.target.id)
-        if (index !== -1) {
-          activeIndex.value = index
+      // O elemento está cruzando a tela
+      if (entry.isIntersecting) {
+        // Se a seção for maior que a tela (como Diferenciais), a ratio nunca chega a 0.3.
+        // Então checamos duas coisas:
+        // 1. A ratio é alta (para seções normais)
+        // 2. Ou a seção é gigante e está cobrindo a parte central da tela.
+        const rect = entry.boundingClientRect
+        const viewportHeight = window.innerHeight
+        const isCoveringScreen = rect.top <= viewportHeight / 2 && rect.bottom >= viewportHeight / 2
+        
+        if (entry.intersectionRatio >= 0.2 || isCoveringScreen) {
+          const index = menuItems.findIndex(item => item.id === entry.target.id)
+          if (index !== -1) {
+            activeIndex.value = index
+          }
         }
       }
     })
   }, { 
-    threshold: 0.3, // Dispara quando 30% da seção está visível
+    threshold: [0, 0.1, 0.2, 0.3], // Vários thresholds para disparar o callback mais vezes
     rootMargin: "-20% 0px -20% 0px" // Ajuste para o meio da tela ser o foco
   })
 

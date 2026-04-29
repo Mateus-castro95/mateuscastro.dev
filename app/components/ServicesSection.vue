@@ -1,5 +1,5 @@
 <template>
-  <section id="services" class="services-section relative z-10 w-full pt-16 md:pt-32 pb-16 md:pb-0 px-4 sm:px-6 md:px-20 flex flex-col justify-start overflow-hidden shadow-[0_-30px_60px_rgba(0,0,0,0.8)]">
+  <section id="services" class="services-section relative z-10 w-full pt-16 md:pt-32 pb-16 md:pb-0 flex flex-col justify-start overflow-hidden shadow-[0_-30px_60px_rgba(0,0,0,0.8)]">
     
     <!-- Background Color with Fade-in (Narrower) -->
     <div class="absolute inset-0 bg-[#1E2229] pointer-events-none" style="mask-image: linear-gradient(to bottom, transparent, black 80px); -webkit-mask-image: linear-gradient(to bottom, transparent, black 80px);"></div>
@@ -23,7 +23,7 @@
       <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/10 blur-[120px] rounded-full"></div>
     </div>
 
-    <div class="max-w-7xl mx-auto w-full relative z-10">
+    <div class="max-w-[1440px] mx-auto w-full px-6 md:pl-16 md:pr-[120px] lg:pl-20 lg:pr-[140px] xl:pl-24 xl:pr-[160px] relative z-10">
       
       <!-- Cabeçalho Editorial -->
       <div class="mb-10 sm:mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between gap-8">
@@ -133,19 +133,19 @@ const cardStyles = reactive(services.map((_, index) => ({
 
 onMounted(() => {
   // Detecta mobile e atualiza ao redimensionar
-  const checkMobile = () => { isMobile.value = window.innerWidth < 1289 }
+  const checkMobile = () => { isMobile.value = window.innerWidth < 1328 }
   checkMobile()
   window.addEventListener('resize', checkMobile)
 
   gsap.registerPlugin(ScrollTrigger)
 
-  const isDesktop = window.innerWidth >= 1289
+  const isDesktop = window.innerWidth >= 1328
 
   // Helper para definir o estado inicial (invisível)
   const resetElements = () => {
     gsap.set('.gs-reveal', { yPercent: 100, opacity: 0 })
     gsap.set('.gs-reveal-sub', { y: 20, opacity: 0 })
-    gsap.set('.service-card', { y: 80, opacity: 0 })
+    // Removemos o reset global dos cards daqui, pois as rotinas específicas (Desktop/Mobile) já setam o estado inicial com segurança
   }
 
   resetElements()
@@ -153,80 +153,119 @@ onMounted(() => {
   // Trigger para títulos e badge (compartilhado)
   ScrollTrigger.create({
     trigger: '#services',
-    start: 'top 75%',
+    start: 'top 60%', // Aciona mais tarde, quando a seção já está bem visível
     end: 'top 10%',
     onEnter: () => {
       gsap.to('.gs-reveal', {
         yPercent: 0,
         opacity: 1,
-        duration: 1.5,
-        stagger: 0.1,
+        duration: 2.5, // Bem mais demorado
+        stagger: 0.25, // Pausa maior entre "Como posso" e "te ajudar"
         ease: 'expo.out'
       })
       gsap.to('.gs-reveal-sub', {
         y: 0,
         opacity: 1,
-        duration: 1.2,
-        delay: 0.4,
-        stagger: 0.2,
+        duration: 2.0,
+        delay: 0.6,
+        stagger: 0.3,
         ease: 'power3.out'
       })
 
-      // Desktop: todos os cards animam juntos com o trigger da seção
-      if (isDesktop) {
-        gsap.to('.service-card', {
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          delay: 0.6,
-          ease: 'power4.out'
-        })
-      }
+      // Desktop cards agora são animados pelo ScrollTrigger scrubbed abaixo
     },
     onLeaveBack: () => {
       resetElements()
     }
   })
 
-  // Mobile/Tablet: cada card tem seu próprio scroll trigger individual
+  // Desktop: Cards aparecem um a um conforme o scroll avança (Scrub)
+  if (isDesktop) {
+    // Definimos o estado inicial explicitamente aqui para garantir
+    gsap.set('.service-card', { y: 150, opacity: 0 })
+
+    gsap.to('.service-card', {
+      y: 0,
+      opacity: 1,
+      stagger: 0.3,
+      ease: 'none', // IMPORTANTE: ease 'none' é o segredo para scrubs super suaves
+      scrollTrigger: {
+        trigger: '#services',
+        start: 'top 40%', 
+        end: 'bottom 95%', // Termina antes da linha preta (final da seção) invadir a tela
+        scrub: 2
+      }
+    })
+  }
+
+  // Mobile/Tablet: Máscara de Varredura (Cinematic Reveal Wipe)
   if (!isDesktop) {
     const cards = document.querySelectorAll('.service-card')
-    cards.forEach((card, i) => {
+    cards.forEach((card) => {
+      
+      // Estado Inicial (Clippado da direita para a esquerda)
+      gsap.set(card, { 
+        clipPath: 'inset(0% 100% 0% 0%)', 
+        opacity: 0,
+        y: 0 
+      })
+      
+      // Seleciona as áreas de texto para atrasar a entrada
+      const contents = card.querySelectorAll('.z-10')
+      gsap.set(contents, { opacity: 0, x: -15 })
+
       ScrollTrigger.create({
         trigger: card,
-        start: 'top 88%',
-        end: 'top 40%',
+        start: 'top 85%',
+        end: 'top 30%',
         once: false,
         onEnter: () => {
-          // Slide-up + fade mais suave e demorado
+          // 1. Wipe do card em si (muito mais devagar)
           gsap.to(card, {
-            y: 0,
+            clipPath: 'inset(0% 0% 0% 0%)',
             opacity: 1,
-            duration: 1.3,
-            delay: i * 0.20,
-            ease: 'expo.out'
+            duration: 2.0, // Aumentado de 1.2
+            ease: 'expo.inOut'
           })
 
-          // Glow pulse na borda — aparece e desaparece
-          gsap.fromTo(card, 
-            { boxShadow: '0 0 0px rgba(163, 255, 18, 0)' },
-            { 
-              boxShadow: '0 0 25px rgba(163, 255, 18, 0.25), inset 0 0 25px rgba(163, 255, 18, 0.05)',
-              duration: 0.8,
-              delay: i * 0.18 + 0.5,
-              ease: 'power2.out',
-              yoyo: true,
-              repeat: 1
-            }
-          )
+          // 2. Conteúdo entra de lado acompanhando o wipe
+          gsap.to(contents, {
+            x: 0,
+            opacity: 1,
+            duration: 1.6, // Aumentado de 1.0
+            stagger: 0.25, // Maior intervalo entre os elementos
+            delay: 0.9, // Espera o wipe chegar mais perto
+            ease: 'power3.out'
+          })
+
+          // 3. Efeito boot/inicialização na caixa neon
+          const impactBox = card.querySelector('.mt-12')
+          if (impactBox) {
+             gsap.fromTo(impactBox, 
+               { boxShadow: '0 0 0px rgba(163, 255, 18, 0)' },
+               { 
+                 boxShadow: '0 0 35px rgba(163, 255, 18, 0.3), inset 0 0 15px rgba(163, 255, 18, 0.1)',
+                 duration: 0.8,
+                 delay: 1.8, // Só inicializa depois de muito tempo
+                 ease: 'power2.out',
+                 yoyo: true,
+                 repeat: 1
+               }
+             )
+          }
         },
         onLeaveBack: () => {
+          // Retrocesso suave
           gsap.to(card, {
-            y: 80,
+            clipPath: 'inset(0% 100% 0% 0%)',
             opacity: 0,
-            duration: 0.5,
+            duration: 0.6,
             ease: 'power2.in'
+          })
+          gsap.to(contents, {
+            opacity: 0,
+            x: -15,
+            duration: 0.4
           })
         }
       })
@@ -255,8 +294,8 @@ onMounted(() => {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Desktop (≥1289px): altura fixa + overflow hidden para o efeito de corte dos cards */
-@media (min-width: 1289px) {
+/* Desktop (≥1328px): altura fixa + overflow hidden para o efeito de corte dos cards */
+@media (min-width: 1328px) {
   .services-section {
     height: 1050px;
     padding-bottom: 0;
@@ -264,8 +303,8 @@ onMounted(() => {
   }
 }
 
-/* Tablet/Medium (768px–1288px): cards horizontais, 1 por linha */
-@media (min-width: 768px) and (max-width: 1288px) {
+/* Tablet/Medium (768px–1327px): cards horizontais, 1 por linha */
+@media (min-width: 768px) and (max-width: 1327px) {
   .services-section {
     padding-bottom: 80px;
   }
@@ -322,8 +361,8 @@ onMounted(() => {
   transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), border-color 0.4s ease, background-color 0.4s ease;
 }
 
-/* Abaixo de 1289px, remove transforms 3D */
-@media (max-width: 1288px) {
+/* Abaixo de 1328px, remove transforms 3D */
+@media (max-width: 1327px) {
   .service-card {
     transform: none !important;
   }
