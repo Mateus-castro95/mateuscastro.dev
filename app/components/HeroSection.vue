@@ -3,7 +3,7 @@
     <!-- Fundo 3D Spline (Exclusivo desta seção) -->
     <div class="absolute inset-0 z-0">
       <ClientOnly>
-        <SplineHero />
+        <SplineHero @loaded="startHeroAnimation" />
       </ClientOnly>
     </div>
 
@@ -14,11 +14,11 @@
         <h1 ref="titleRef" class="text-[clamp(1.5rem,7.5vw,10rem)] font-bold text-[#A3FF12] tracking-[0.1em] leading-none mb-6 font-display whitespace-nowrap uppercase">
           Mateus Castro
         </h1>
-        <p class="text-xs sm:text-base md:text-lg lg:text-xl text-white/90 font-bold tracking-widest uppercase font-mono leading-relaxed opacity-0 animate-fade-in" style="animation-delay: 0.8s; animation-fill-mode: both;">
+        <p :class="['text-xs sm:text-base md:text-lg lg:text-xl text-white/90 font-bold tracking-widest uppercase font-mono leading-relaxed opacity-0', isLoaded ? 'animate-fade-in' : '']" style="animation-delay: 0.8s; animation-fill-mode: both;">
           <span class="inline-block whitespace-nowrap mr-2">Desenvolvedor Full Stack |</span>
           <span class="inline-block whitespace-nowrap">Web Designer</span>
         </p>
-        <div class="mt-16 md:mt-24 border-l-2 border-[#A3FF12] pl-6 max-w-lg animate-fade-in" style="animation-delay: 0.3s">
+        <div :class="['mt-16 md:mt-24 border-l-2 border-[#A3FF12] pl-6 max-w-lg opacity-0', isLoaded ? 'animate-fade-in' : '']" style="animation-delay: 0.3s">
           <p class="text-slate-400 text-sm md:text-base lg:text-lg leading-[2.2] font-sans tracking-tight">
             Desenvolvo sistemas sob medida para empresas <br />
             <span class="text-[#A3FF12] font-bold uppercase tracking-wider mt-4 inline-block">Sites 3D, animações e interações imersivas</span>
@@ -28,7 +28,8 @@
       </div>
     </div>
     <!-- Indicador de Scroll -->
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center animate-bounce-slow opacity-100 hover:scale-110 transition-all duration-500 drop-shadow-[0_0_10px_rgba(163,255,18,0.6)]">
+    <!-- Indicador de Scroll -->
+    <div :class="['absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center hover:scale-110 transition-all duration-500 drop-shadow-[0_0_10px_rgba(163,255,18,0.6)]', isLoaded ? 'animate-bounce-slow opacity-100' : 'opacity-0']" style="transition-delay: 1.5s;">
       <Mouse class="text-[#A3FF12] w-8 h-8 md:w-12 md:h-12" />
       <ChevronDown class="text-[#A3FF12] w-5 h-5 md:w-8 md:h-8 -mt-2" />
     </div>
@@ -44,9 +45,18 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(SplitText, ScrollTrigger)
 
+const isLoaded = ref(false)
 const titleRef = ref<HTMLElement | null>(null)
 let ctx: gsap.Context | undefined
 let split: InstanceType<typeof SplitText> | null = null
+let tl: gsap.core.Timeline | null = null
+
+const startHeroAnimation = () => {
+  isLoaded.value = true
+  if (tl) {
+    tl.play()
+  }
+}
 
 onMounted(() => {
   ctx = gsap.context(() => {
@@ -64,7 +74,7 @@ onMounted(() => {
     gsap.set(titleRef.value, { perspective: 800 })
     gsap.set(chars, { position: 'relative', opacity: 0 }) // Tudo invisível até chegar a vez na timeline!
 
-    const tl = gsap.timeline({ delay: 0.3 })
+    tl = gsap.timeline({ delay: 0.3, paused: true })
 
     // 1. Letra "M" (index 0): Surge estática como um "W" (ponta cabeça), depois desvira.
     if (chars[0]) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed inset-0 pointer-events-none z-50">
+  <div class="fixed inset-0 pointer-events-none z-50 transition-opacity duration-[1500ms]" :class="isLoaded ? 'opacity-100' : 'opacity-0'">
     
     <!-- === MODO NORMAL (Desktop ou Hero) === -->
     <!-- Linha de Fundo Reta -->
@@ -68,6 +68,7 @@ import { Rocket, Blocks, GalleryHorizontalEnd, Award, Workflow, Send } from 'luc
 import { useWindowSize } from '@vueuse/core'
 
 const activeIndex = ref(0)
+const isLoaded = ref(false)
 const { width } = useWindowSize()
 const lenis = inject<any>('lenis')
 
@@ -113,6 +114,11 @@ const scrollTo = (id: string) => {
 let observer: IntersectionObserver | null = null
 
 onMounted(() => {
+  // Escuta o evento global disparado quando o Spline (Hero) terminar de carregar
+  window.addEventListener('app-loaded', () => {
+    isLoaded.value = true
+  })
+
   observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       // O elemento está cruzando a tela
@@ -151,6 +157,9 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (observer) observer.disconnect()
+  window.removeEventListener('app-loaded', () => {
+    isLoaded.value = true
+  })
 })
 </script>
 
