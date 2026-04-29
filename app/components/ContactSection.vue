@@ -135,6 +135,13 @@
         </div>
 
       </div>
+
+      <!-- Footer Credits -->
+      <div class="mt-24 pt-12 border-t border-[#A3FF12]/10 text-center">
+        <p class="text-white/70 font-mono text-[clamp(10px,2vw,16px)] uppercase tracking-[0.2em] sm:tracking-[0.4em] whitespace-nowrap overflow-hidden text-ellipsis">
+          Desenvolvido por <span class="text-[#A3FF12]/70">Mateus Castro</span> ©
+        </p>
+      </div>
     </div>
   </section>
 </template>
