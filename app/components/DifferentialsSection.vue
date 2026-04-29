@@ -86,8 +86,9 @@ const differentials = [
   { title: 'Experiência moderna e diferenciada',    description: 'Interfaces com animações, interações e até 3D quando faz sentido — sempre com foco em usabilidade.' },
   { title: 'Sistemas sob medida',                   description: 'Nada de solução genérica. Desenvolvo sistemas personalizados para resolver problemas reais do seu negócio.' },
   { title: 'Pensamento estratégico antes do código',description: 'Entendo seu processo, seu público e seus objetivos antes de construir qualquer solução.' },
-  { title: 'Tecnologia como vantagem competitiva',  description: 'Uso ferramentas modernas e IA para desenvolver mais rápido e entregar soluções mais inteligentes.' },
-  { title: 'Automação que economiza tempo e escala',description: 'Desenvolvo automações e integrações que eliminam tarefas manuais, conectam ferramentas e deixam seu processo rodando no automático.' }
+  { title: 'Automação que economiza tempo e escala',description: 'Desenvolvo automações e integrações que eliminam tarefas manuais, conectam ferramentas e deixam seu processo rodando no automático.' },
+  { title: 'Tecnologia como vantagem competitiva',  description: 'Uso ferramentas modernas e IA para desenvolver mais rápido e entregar soluções mais inteligentes.' }
+  
 ]
 
 onMounted(() => {

@@ -40,6 +40,9 @@ onMounted(() => {
       <!-- Seção de Processo -->
       <ProcessSection />
       
+      <!-- Seção de Contato -->
+      <ContactSection />
+      
       <!-- Outras seções virão aqui: About, Skills, etc. -->
     </main>
 
