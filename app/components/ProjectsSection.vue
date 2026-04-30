@@ -11,38 +11,51 @@ let ctx: gsap.Context
 const projects = [
   { 
     id: 1, 
-    title: 'E-Commerce Platform', 
-    category: 'Web Development', 
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?q=80&w=1200&auto=format&fit=crop', 
-    description: 'A modern e-commerce solution with high performance and seamless user experience.' 
+    title: 'Gestão MEI', 
+    category: 'Micro-SaaS', 
+    image: '/projects/gestao-mei.png', 
+    link: 'https://app-mei-tau.vercel.app/login',
+    description: 'Sistema inteligente de controle de faturamento e gestão financeira para Microempreendedores Individuais, com dashboards em tempo real e insights estratégicos.' 
   },
   { 
     id: 2, 
-    title: 'Fintech Dashboard', 
-    category: 'UI/UX Design', 
+    title: 'Zyra App', 
+    category: 'Fintech / Finanças Pessoais', 
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop', 
-    description: 'Analytics dashboard for a leading fintech startup with real-time data visualization.' 
+    link: 'https://app-financeiro-orcin.vercel.app/login',
+    description: 'Ecossistema de finanças pessoais para gestão completa de receitas e despesas, com análise de gastos por categoria e projeções inteligentes de faturamento futuro.' 
   },
   { 
     id: 3, 
-    title: 'Social App', 
-    category: 'Mobile App', 
-    image: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=1200&auto=format&fit=crop', 
-    description: 'A responsive cross-platform mobile application connecting thousands of users.' 
+    title: 'Mesa & Cia', 
+    category: 'Site Moderno e Elegante', 
+    image: '/projects/atelie.png', 
+    link: 'https://atelie-mesa-e-cia.vercel.app/',
+    description: 'Um espaço dedicado à arte de receber e à confeitaria artesanal, onde cada detalhe da mesa posta e cada doce são criados com amor e sofisticação.' 
   },
   { 
     id: 4, 
-    title: 'Brand Identity', 
-    category: 'Branding', 
-    image: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?q=80&w=1200&auto=format&fit=crop', 
-    description: 'Complete visual identity redesign for a corporate client, including print and digital.' 
+    title: 'Landing Page - Gestão MEI', 
+    category: 'Vendas e Conversão', 
+    image: '/projects/gestao-mei-sales.png', 
+    link: 'https://app-mei-pagina-vendas.vercel.app/',
+    description: 'Página de vendas de alta performance projetada para o ecossistema Gestão MEI, com foco em clareza, autoridade e conversão de novos usuários.' 
   },
   { 
     id: 5, 
-    title: 'AI Saas Landing', 
-    category: 'Web Design', 
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop', 
-    description: 'High-converting landing page for a next-generation artificial intelligence startup.' 
+    title: 'Gabarita Português', 
+    category: 'Landing Page / Educação', 
+    image: '/projects/gabarita-portugues.png', 
+    link: 'https://gabaritar-portugues-concursos.vercel.app/',
+    description: 'Página de vendas focada em conversão para materiais didáticos especializados em concursos públicos, com design clean e intuitivo para máxima clareza.' 
+  },
+  { 
+    id: 6, 
+    title: 'Barbearia Elite', 
+    category: 'Website de Serviços', 
+    image: '/projects/barbearia.png', 
+    link: 'https://barbearia-azure-ten.vercel.app/',
+    description: 'Website sofisticado com sistema de agendamento online e vitrine de serviços, desenvolvido para barbearias que prezam pelo estilo clássico e excelência.' 
   },
 ]
 
@@ -206,12 +219,12 @@ onUnmounted(() => {
               {{ project.description }}
             </p>
             
-            <div class="flex items-center text-sm md:text-base font-medium text-[#A3FF12] transition-colors duration-300 w-fit pb-1 border-b border-[#A3FF12]/40 group-hover:border-[#A3FF12]">
+            <NuxtLink :to="project.link || '#'" target="_blank" class="flex items-center text-sm md:text-base font-medium text-[#A3FF12] transition-colors duration-300 w-fit pb-1 border-b border-[#A3FF12]/40 group-hover:border-[#A3FF12]">
               <span class="mr-3 tracking-wide uppercase text-xs md:text-sm font-bold">Ver Projeto</span>
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 transform group-hover:translate-x-2 transition-transform duration-500 ease-out" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
-            </div>
+            </NuxtLink>
           </div>
           
           <!-- Glow effect -->
