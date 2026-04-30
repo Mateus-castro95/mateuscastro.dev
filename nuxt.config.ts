@@ -4,6 +4,14 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ['@nuxtjs/tailwindcss', '@vueuse/nuxt', '@tresjs/nuxt'],
   css: ['~/assets/css/main.css'],
+  app: {
+    head: {
+      title: 'Mateus Castro | Full Stack Developer',
+      link: [
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' }
+      ]
+    }
+  },
   tres: {
     glsl: true,
   }
