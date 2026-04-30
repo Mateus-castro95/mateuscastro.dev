@@ -197,35 +197,39 @@ onUnmounted(() => {
         <div v-for="(project, index) in projects" :key="project.id" 
              class="group relative w-[85vw] sm:w-[65vw] md:w-[45vw] lg:w-[35vw] xl:w-[28vw] flex-shrink-0 rounded-[2rem] overflow-hidden bg-[#0A0A0A] border border-white/10 hover:border-[#A3FF12]/60 transition-all duration-700 cursor-pointer shadow-2xl shadow-black/50">
           
-          <!-- Image -->
-          <div class="relative w-full aspect-[4/3] overflow-hidden bg-zinc-900">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-black/20 to-transparent z-10 opacity-80 group-hover:opacity-40 transition-opacity duration-700"></div>
-            <img :src="project.image" :alt="project.title" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" />
-            
-            <!-- Badge -->
-            <div class="absolute top-6 right-6 z-20">
-              <span class="px-4 py-2 rounded-full text-[10px] sm:text-xs font-sans font-semibold bg-white/10 backdrop-blur-md border border-white/20 text-white uppercase tracking-[0.15em]">
-                {{ project.category }}
-              </span>
+          <NuxtLink :to="project.link || '#'" target="_blank" class="block w-full h-full">
+            <!-- Image -->
+            <div class="relative w-full aspect-[4/3] overflow-hidden bg-zinc-900">
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-black/20 to-transparent z-10 opacity-80 group-hover:opacity-40 transition-opacity duration-700"></div>
+              <img :src="project.image" :alt="project.title" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]" />
+              
+              <!-- Badge -->
+              <div class="absolute top-6 right-6 z-20">
+                <span class="px-4 py-2 rounded-full text-[10px] sm:text-xs font-sans font-semibold bg-white/10 backdrop-blur-md border border-white/20 text-white uppercase tracking-[0.15em]">
+                  {{ project.category }}
+                </span>
+              </div>
             </div>
-          </div>
-          
-          <!-- Content -->
-          <div class="p-8 md:p-10 font-sans flex flex-col relative z-20">
-            <h3 class="text-3xl md:text-4xl font-normal mb-4 font-['Changa_One'] tracking-wider text-white group-hover:text-[#A3FF12] transition-colors duration-500">
-              {{ project.title }}
-            </h3>
-            <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8 flex-grow font-light">
-              {{ project.description }}
-            </p>
             
-            <NuxtLink :to="project.link || '#'" target="_blank" class="flex items-center text-sm md:text-base font-medium text-[#A3FF12] transition-colors duration-300 w-fit pb-1 border-b border-[#A3FF12]/40 group-hover:border-[#A3FF12]">
-              <span class="mr-3 tracking-wide uppercase text-xs md:text-sm font-bold">Ver Projeto</span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 transform group-hover:translate-x-2 transition-transform duration-500 ease-out" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </NuxtLink>
-          </div>
+            <!-- Content -->
+            <div class="p-8 md:p-10 font-sans flex flex-col relative z-20">
+              <h3 class="text-3xl md:text-4xl font-normal mb-4 font-['Changa_One'] tracking-wider text-white group-hover:text-[#A3FF12] transition-colors duration-500">
+                {{ project.title }}
+              </h3>
+              <p class="text-gray-400 text-sm md:text-base leading-relaxed mb-8 flex-grow font-light">
+                {{ project.description }}
+              </p>
+              
+              <div class="flex items-center text-sm md:text-base font-medium text-[#A3FF12] transition-colors duration-300 w-fit pb-1 border-b border-[#A3FF12]/40 group-hover:border-[#A3FF12]">
+                <span class="mr-3 tracking-wide uppercase text-xs md:text-sm font-bold">Ver Projeto</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5 transform group-hover:translate-x-2 transition-transform duration-500 ease-out" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </div>
+            </div>
+          </NuxtLink>
+          
+          <!-- Glow effect -->
           
           <!-- Glow effect -->
           <div class="absolute -inset-px rounded-[2rem] bg-gradient-to-b from-[#A3FF12]/0 to-[#A3FF12]/0 group-hover:from-[#A3FF12]/15 group-hover:to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
