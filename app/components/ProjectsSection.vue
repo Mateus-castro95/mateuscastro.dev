@@ -13,7 +13,7 @@ const projects = [
     id: 1, 
     title: 'Gestão MEI', 
     category: 'Micro-SaaS', 
-    image: '/projects/gestao-mei.png', 
+    image: '/projects/gestao-mei.jpg', 
     link: 'https://app-mei-tau.vercel.app/login',
     description: 'Sistema inteligente de controle de faturamento e gestão financeira para Microempreendedores Individuais, com dashboards em tempo real e insights estratégicos.' 
   },
@@ -29,7 +29,7 @@ const projects = [
     id: 3, 
     title: 'Mesa & Cia', 
     category: 'Site Moderno e Elegante', 
-    image: '/projects/atelie.png', 
+    image: '/projects/atelie.jpg', 
     link: 'https://atelie-mesa-e-cia.vercel.app/',
     description: 'Um espaço dedicado à arte de receber e à confeitaria artesanal, onde cada detalhe da mesa posta e cada doce são criados com amor e sofisticação.' 
   },
@@ -37,7 +37,7 @@ const projects = [
     id: 4, 
     title: 'Landing Page - Gestão MEI', 
     category: 'Vendas e Conversão', 
-    image: '/projects/gestao-mei-sales.png', 
+    image: '/projects/gestao-mei-sales.jpg', 
     link: 'https://app-mei-pagina-vendas.vercel.app/',
     description: 'Página de vendas de alta performance projetada para o ecossistema Gestão MEI, com foco em clareza, autoridade e conversão de novos usuários.' 
   },
@@ -45,18 +45,27 @@ const projects = [
     id: 5, 
     title: 'Gabarita Português', 
     category: 'Landing Page / Educação', 
-    image: '/projects/gabarita-portugues.png', 
+    image: '/projects/gabarita-portugues.jpg', 
     link: 'https://gabaritar-portugues-concursos.vercel.app/',
     description: 'Página de vendas focada em conversão para materiais didáticos especializados em concursos públicos, com design clean e intuitivo para máxima clareza.' 
   },
   { 
     id: 6, 
+    title: 'Iron Gym', 
+    category: 'Website de Performance', 
+    image: '/projects/site-academia.jpg', 
+    link: 'https://iron-gym-sp.vercel.app/',
+    description: 'Website premium para academia com design imersivo e estética "Raw Athletic Luxury", desenvolvido para destacar a marca e atrair novos alunos.' 
+  },
+  { 
+    id: 7, 
     title: 'Barbearia Elite', 
     category: 'Website de Serviços', 
-    image: '/projects/barbearia.png', 
+    image: '/projects/barbearia.jpg', 
     link: 'https://barbearia-azure-ten.vercel.app/',
     description: 'Website sofisticado com sistema de agendamento online e vitrine de serviços, desenvolvido para barbearias que prezam pelo estilo clássico e excelência.' 
   },
+  
 ]
 
 // Quebra o título em spans por letra, agrupando palavras numa linha-wrapper com overflow:hidden
