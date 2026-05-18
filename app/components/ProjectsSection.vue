@@ -27,30 +27,6 @@ const projects = [
   },
   { 
     id: 3, 
-    title: 'Mesa & Cia', 
-    category: 'Site Moderno e Elegante', 
-    image: '/projects/atelie.jpg', 
-    link: 'https://atelie-mesa-e-cia.vercel.app/',
-    description: 'Um espaço dedicado à arte de receber e à confeitaria artesanal, onde cada detalhe da mesa posta e cada doce são criados com amor e sofisticação.' 
-  },
-  { 
-    id: 4, 
-    title: 'Landing Page - Gestão MEI', 
-    category: 'Vendas e Conversão', 
-    image: '/projects/gestao-mei-sales.jpg', 
-    link: 'https://app-mei-pagina-vendas.vercel.app/',
-    description: 'Página de vendas de alta performance projetada para o ecossistema Gestão MEI, com foco em clareza, autoridade e conversão de novos usuários.' 
-  },
-  { 
-    id: 5, 
-    title: 'Gabarita Português', 
-    category: 'Landing Page / Educação', 
-    image: '/projects/gabarita-portugues.jpg', 
-    link: 'https://gabaritar-portugues-concursos.vercel.app/',
-    description: 'Página de vendas focada em conversão para materiais didáticos especializados em concursos públicos, com design clean e intuitivo para máxima clareza.' 
-  },
-  { 
-    id: 6, 
     title: 'Iron Gym', 
     category: 'Website de Performance', 
     image: '/projects/site-academia.jpg', 
@@ -58,7 +34,47 @@ const projects = [
     description: 'Website premium para academia com design imersivo e estética "Raw Athletic Luxury", desenvolvido para destacar a marca e atrair novos alunos.' 
   },
   { 
+    id: 4, 
+    title: 'Dra. Lígia Cordeiro', 
+    category: 'Clínica de Estética', 
+    image: '/projects/dra-ligia.jpg', 
+    link: 'https://dra-ligia-cordeiro.vercel.app/',
+    description: 'Website de alto padrão para clínica de estética, com design luxuoso e focado em transmitir excelência, autoridade e exclusividade no atendimento.' 
+  },
+  { 
+    id: 5, 
+    title: 'TransVeloz', 
+    category: 'Transportadora e Logística', 
+    image: '/projects/trans-veloz.jpg', 
+    link: 'https://transveloz-sp.vercel.app/',
+    description: 'Website corporativo premium para empresa de logística, destacando agilidade, segurança e eficiência no transporte de cargas.' 
+  },
+  { 
+    id: 6, 
+    title: 'Mesa & Cia', 
+    category: 'Site Moderno e Elegante', 
+    image: '/projects/atelie.jpg', 
+    link: 'https://atelie-mesa-e-cia.vercel.app/',
+    description: 'Um espaço dedicado à arte de receber e à confeitaria artesanal, onde cada detalhe da mesa posta e cada doce são criados com amor e sofisticação.' 
+  },
+  { 
     id: 7, 
+    title: 'Landing Page - Gestão MEI', 
+    category: 'Vendas e Conversão', 
+    image: '/projects/gestao-mei-sales.jpg', 
+    link: 'https://app-mei-pagina-vendas.vercel.app/',
+    description: 'Página de vendas de alta performance projetada para o ecossistema Gestão MEI, com foco em clareza, autoridade e conversão de novos usuários.' 
+  },
+  { 
+    id: 8, 
+    title: 'Gabarita Português', 
+    category: 'Landing Page / Educação', 
+    image: '/projects/gabarita-portugues.jpg', 
+    link: 'https://gabaritar-portugues-concursos.vercel.app/',
+    description: 'Página de vendas focada em conversão para materiais didáticos especializados em concursos públicos, com design clean e intuitivo para máxima clareza.' 
+  },
+  { 
+    id: 9, 
     title: 'Barbearia Elite', 
     category: 'Website de Serviços', 
     image: '/projects/barbearia.jpg', 
